@@ -39,7 +39,7 @@ finance-tracker/
 ## Setup
 
 ### Prerequisites
-- Node.js 18+
+- Node.js 18.11+
 - MongoDB running locally, or a MongoDB Atlas connection string
 
 ### 1. Backend
@@ -49,7 +49,7 @@ cd backend
 cp .env.example .env
 # edit .env: set MONGO_URI and a real JWT_SECRET
 npm install
-npm run dev        # nodemon, or `npm start` for plain node
+npm run dev        # Node's built-in watch mode, or `npm start` for plain node
 ```
 
 The API runs on `http://localhost:5000` by default. Health check: `GET /api/health`.
