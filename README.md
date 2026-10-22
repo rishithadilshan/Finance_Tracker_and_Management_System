@@ -1,135 +1,91 @@
-# Finance_Tracker_and_Management_System
-Personal Financial Tracker is a web-based application designed to help users manage and monitor their personal finances. The system allows users to record income and expenses, manage budgets, track savings goals, and monitor their financial accounts.
-## Overview
+# Personal Finance Tracker (MERN)
 
-Most expense trackers only record what you spent. **FinTrack** goes further by connecting the whole financial flow:
+A full-stack personal financial tracker built with MongoDB, Express, React and Node.js.
 
-```
-Income → Expenses → Budget → Savings → Goals → Analysis → Reports
-```
+## What's included
 
-Each user has a private account; every API request is authenticated with JWT so one user can never see another user's financial data.
+**Backend (Node.js + Express + MongoDB + JWT)**
+- User auth (register/login, JWT, password hashing with bcrypt)
+- Accounts (cash/bank/savings/credit card/wallet) with balance tracking
+- Transactions (income & expense) with full CRUD, search, filters, pagination
+- Account-to-account transfers (correctly excluded from income/expense totals)
+- Budgets per category per month, with spent/remaining/percentage-used calculations
+- Savings goals with progress %, contributions, and required-monthly-saving calculation
+- Dashboard API aggregating balance, monthly income/expense, category breakdown, budget status, goal progress, recent transactions
+- Reports API: monthly, yearly (12-month income vs expense), and per-category
 
----
+**Frontend (React + Vite + Tailwind + Recharts)**
+- Login / Register pages
+- Dashboard with stat cards, pie chart (expenses by category), budget progress, goal progress, recent transactions
+- Transactions page: add/edit/delete, filter by type/category/date/search, pagination
+- Accounts page: create accounts, view balances, transfer between accounts
+- Budgets page: set monthly category budgets, see spend vs budget with warnings
+- Goals page: create goals, contribute towards them, see progress bars
+- Reports page: monthly summary + yearly income vs expense bar chart
 
-## Features
-
-### Authentication & Profile
-- Register / login with hashed passwords (bcrypt)
-- JWT-based protected routes
-- Profile update, currency selection, change password
-
-### Dashboard
-- Total balance across all accounts
-- Monthly income, expenses and savings (with savings rate)
-- Expenses-by-category pie chart
-- Monthly budget progress with warning / exceeded alerts
-- Savings goal progress
-- Recent transactions
-
-### Transactions
-- Add, edit, delete income and expense records
-- Search by description or category
-- Filter by type, category, account and date range
-- Server-side pagination and sorting
-- Account balances update automatically
-
-### Multiple Accounts & Transfers
-- Cash, bank, savings, credit card, digital wallet
-- Transfer money between accounts — **not** counted as income or expense
-
-### Budgets
-- Set a monthly budget per category
-- Spent / remaining / percentage used calculated server-side
-- ⚠️ Warning at 80% and 🔴 exceeded state at 100%
-
-### Savings Goals
-- Create goals with a target amount and optional target date
-- Contribute over time and track progress
-- Automatic "required monthly saving" calculation
-
-### Reports & Analytics
-- Monthly report (income, expenses, savings, highest expense category)
-- Yearly report with income vs. expense bar chart
-- Category report
-
----
-
-## 🛠 Tech Stack
-
-| Layer | Technology |
-|-------|------------|
-| **Frontend** | React 18, Vite, React Router, Axios, Tailwind CSS, Recharts |
-| **Backend** | Node.js, Express.js |
-| **Database** | MongoDB with Mongoose ODM |
-| **Auth** | JSON Web Tokens (JWT), bcryptjs |
-| **Tools** | Git & GitHub, Postman, VS Code, nodemon |
-
----
-
-## 🏗 System Architecture
-
-```
-                 FRONTEND
-          React + Vite + Tailwind
-                    │
-              HTTP (REST / JSON)
-                    │
-                    ▼
-               BACKEND API
-              Express.js (Node)
-                    │
-     ┌──────────────┼──────────────┐
-     │              │              │
- Auth (JWT)    Business Logic   Validation
-     │              │              │
-     └──────────────┼──────────────┘
-                    │
-                    ▼
-                 MongoDB
-```
-
-The frontend never talks to MongoDB directly — everything goes through the authenticated Express API.
-
----
-
-## 📂 Project Structure
+## Project structure
 
 ```
 finance-tracker/
 ├── backend/
-│   ├── config/
-│   │   └── db.js                  # MongoDB connection
-│   ├── controllers/               # Request handling & business logic
-│   │   ├── authController.js
-│   │   ├── accountController.js
-│   │   ├── transactionController.js
-│   │   ├── budgetController.js
-│   │   ├── goalController.js
-│   │   ├── dashboardController.js
-│   │   └── reportController.js
-│   ├── middleware/
-│   │   ├── authMiddleware.js      # JWT verification
-│   │   └── errorMiddleware.js
-│   ├── models/                    # Mongoose schemas
-│   │   ├── User.js
-│   │   ├── Account.js
-│   │   ├── Transaction.js
-│   │   ├── Budget.js
-│   │   ├── Goal.js
-│   │   └── RecurringTransaction.js
+│   ├── config/db.js
+│   ├── models/            (User, Account, Transaction, Budget, Goal, RecurringTransaction)
+│   ├── controllers/
 │   ├── routes/
+│   ├── middleware/         (JWT auth, error handling)
 │   ├── app.js
-│   ├── server.js
-│   └── .env.example
-│
+│   └── server.js
 └── frontend/
     └── src/
-        ├── api/axios.js           # Axios instance + auth interceptor
+        ├── api/axios.js
         ├── context/AuthContext.jsx
-        ├── components/            # Navbar, PrivateRoute, StatCard, ProgressBar
-        ├── pages/                 # Login, Register, Dashboard, Transactions,
-        │                          # Accounts, Budgets, Goals, Reports
-        ├── App.jsx
-        └── main.jsx
+        ├── components/     (Navbar, PrivateRoute, StatCard, ProgressBar)
+        └── pages/          (Login, Register, Dashboard, Transactions, Accounts, Budgets, Goals, Reports)
 ```
+
+## Setup
+
+### Prerequisites
+- Node.js 18+
+- MongoDB running locally, or a MongoDB Atlas connection string
+
+### 1. Backend
+
+```bash
+cd backend
+cp .env.example .env
+# edit .env: set MONGO_URI and a real JWT_SECRET
+npm install
+npm run dev        # nodemon, or `npm start` for plain node
+```
+
+The API runs on `http://localhost:5000` by default. Health check: `GET /api/health`.
+
+### 2. Frontend
+
+```bash
+cd frontend
+cp .env.example .env   # optional — Vite proxy already forwards /api to :5000
+npm install
+npm run dev
+```
+
+The app runs on `http://localhost:5173`. Register a new account, and a default "Cash" account is created for you automatically so you can start adding transactions right away.
+
+## How it works (quick tour)
+
+1. **Register/Login** → JWT stored in `localStorage`, attached to every API request via an axios interceptor.
+2. **Add an account** (or use the default Cash one) → **Add transactions** (income/expense) against that account → the account balance updates automatically.
+3. **Set budgets** per category per month → the Budgets page shows spent vs. budget with warning (⚠️ ≥80%) / exceeded (🔴 ≥100%) states.
+4. **Create savings goals** and contribute to them over time → progress bar + required monthly saving to hit your target date.
+5. **Transfers** between your own accounts move money without being counted as income/expense — the total balance stays the same, only its distribution changes.
+6. **Dashboard** and **Reports** pull everything together via MongoDB aggregation pipelines (no client-side recalculation of totals).
+
+## Extending it
+
+This covers the "core" module list (auth, dashboard, transactions, accounts, budgets, goals, reports/analytics). Natural next additions, following the same patterns already in the codebase:
+- **Recurring transactions**: the `RecurringTransaction` model is already scaffolded — add a route/controller plus a small cron job (e.g. `node-cron`) that checks `nextDate <= today` and auto-creates transactions.
+- **Bill reminders**: similar shape to recurring transactions, but without auto-creating a transaction — just a due-date list + notification.
+- **Notifications**: the budget/goal endpoints already compute the numbers needed (percentageUsed, remaining) — a notifications page can just poll those and render alerts.
+- **CSV/PDF export**: add a `/api/reports/export` endpoint using a library like `json2csv` or `pdfkit`, reusing the existing report aggregation logic.
+- **Expense prediction (optional ML)**: the yearly report already returns 12 months of income/expense — a simple moving-average or linear regression over that array is enough for a first version; no ML framework required.

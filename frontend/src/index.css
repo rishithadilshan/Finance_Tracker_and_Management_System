@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply text-gray-900;
+  background: linear-gradient(160deg, #F6FAFF 0%, #EAF2FF 45%, #DCE9FF 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+}
