@@ -15,13 +15,7 @@ A full-stack personal financial tracker built with MongoDB, Express, React and N
 - Reports API: monthly, yearly (12-month income vs expense), and per-category
 
 **Frontend (React + Vite + Tailwind + Recharts)**
-- Login / Register pages
-- Dashboard with stat cards, pie chart (expenses by category), budget progress, goal progress, recent transactions
-- Transactions page: add/edit/delete, filter by type/category/date/search, pagination
-- Accounts page: create accounts, view balances, transfer between accounts
-- Budgets page: set monthly category budgets, see spend vs budget with warnings
-- Goals page: create goals, contribute towards them, see progress bars
-- Reports page: monthly summary + yearly income vs expense bar chart
+- The page screens and their routes have been removed; the frontend currently renders no page content.
 
 ## Project structure
 
@@ -39,8 +33,7 @@ finance-tracker/
     └── src/
         ├── api/axios.js
         ├── context/AuthContext.jsx
-        ├── components/     (Navbar, PrivateRoute, StatCard, ProgressBar)
-        └── pages/          (Login, Register, Dashboard, Transactions, Accounts, Budgets, Goals, Reports)
+        └── components/     (Navbar, PrivateRoute, StatCard, ProgressBar)
 ```
 
 ## Setup
