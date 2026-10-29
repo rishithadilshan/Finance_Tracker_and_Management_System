@@ -1,4 +1,4 @@
-# Personal Finance Tracker (MERN)
+# Finora (Personal Finance Tracker)
 
 A full-stack personal financial tracker built with MongoDB, Express, React and Node.js.
 
