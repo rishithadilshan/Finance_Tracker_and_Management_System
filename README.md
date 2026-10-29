@@ -4,37 +4,123 @@ A full-stack personal financial tracker built with MongoDB, Express, React and N
 
 ## What's included
 
-**Backend (Node.js + Express + MongoDB + JWT)**
-- User auth (register/login, JWT, password hashing with bcrypt)
-- Accounts (cash/bank/savings/credit card/wallet) with balance tracking
-- Transactions (income & expense) with full CRUD, search, filters, pagination
-- Account-to-account transfers (correctly excluded from income/expense totals)
-- Budgets per category per month, with spent/remaining/percentage-used calculations
-- Savings goals with progress %, contributions, and required-monthly-saving calculation
-- Dashboard API aggregating balance, monthly income/expense, category breakdown, budget status, goal progress, recent transactions
-- Reports API: monthly, yearly (12-month income vs expense), and per-category
+## Features
 
-**Frontend (React + Vite + Tailwind + Recharts)**
-- The page screens and their routes have been removed; the frontend currently renders no page content.
+Authentication & Profile
+Register / login with hashed passwords (bcrypt)
+JWT-based protected routes
+Profile update, currency selection, change password
+Dashboard
+Total balance across all accounts
+Monthly income, expenses and savings (with savings rate)
+Expenses-by-category pie chart
+Monthly budget progress with warning / exceeded alerts
+Savings goal progress
+Recent transactions
+Transactions
+Add, edit, delete income and expense records
+Search by description or category
+Filter by type, category, account and date range
+Server-side pagination and sorting
+Account balances update automatically
+Multiple Accounts & Transfers
+Cash, bank, savings, credit card, digital wallet
+Transfer money between accounts — not counted as income or expense
+Budgets
+Set a monthly budget per category
+Spent / remaining / percentage used calculated server-side
+⚠️ Warning at 80% and 🔴 exceeded state at 100%
+Savings Goals
+Create goals with a target amount and optional target date
+Contribute over time and track progress
+Automatic "required monthly saving" calculation
+Reports & Analytics
+Monthly report (income, expenses, savings, highest expense category)
+Yearly report with income vs. expense bar chart
+Category report
 
 ## Project structure
 
-```
 finance-tracker/
 ├── backend/
-│   ├── config/db.js
-│   ├── models/            (User, Account, Transaction, Budget, Goal, RecurringTransaction)
-│   ├── controllers/
+│   ├── config/
+│   │   └── db.js                  # MongoDB connection
+│   ├── controllers/               # Request handling & business logic
+│   │   ├── authController.js
+│   │   ├── accountController.js
+│   │   ├── transactionController.js
+│   │   ├── budgetController.js
+│   │   ├── goalController.js
+│   │   ├── dashboardController.js
+│   │   └── reportController.js
+│   ├── middleware/
+│   │   ├── authMiddleware.js      # JWT verification
+│   │   └── errorMiddleware.js
+│   ├── models/                    # Mongoose schemas
+│   │   ├── User.js
+│   │   ├── Account.js
+│   │   ├── Transaction.js
+│   │   ├── Budget.js
+│   │   ├── Goal.js
+│   │   └── RecurringTransaction.js
 │   ├── routes/
-│   ├── middleware/         (JWT auth, error handling)
 │   ├── app.js
-│   └── server.js
+│   ├── server.js
+│   └── .env.example
+│
 └── frontend/
     └── src/
-        ├── api/axios.js
+        ├── api/axios.js           # Axios instance + auth interceptor
         ├── context/AuthContext.jsx
-        └── components/     (Navbar, PrivateRoute, StatCard, ProgressBar)
-```
+        ├── components/            # Navbar, PrivateRoute, StatCard, ProgressBar
+        ├── pages/                 # Login, Register, Dashboard, Transactions,
+        │                          # Accounts, Budgets, Goals, Reports
+        ├── App.jsx
+        └── main.jsx
+
+## System Architecture
+
+                 FRONTEND
+          React + Vite + Tailwind
+                    │
+              HTTP (REST / JSON)
+                    │
+                    ▼
+               BACKEND API
+              Express.js (Node)
+                    │
+     ┌──────────────┼──────────────┐
+     │              │              │
+ Auth (JWT)    Business Logic   Validation
+     │              │              │
+     └──────────────┼──────────────┘
+                    │
+                    ▼
+                 MongoDB
+
+## Database Models
+User                 Account              Transaction
+├─ name              ├─ userId            ├─ userId
+├─ email (unique)    ├─ name              ├─ accountId
+├─ password (hash)   ├─ type              ├─ type (income | expense)
+├─ currency          └─ balance           ├─ amount
+└─ monthlyIncomeTarget                    ├─ category
+                                          ├─ description
+Budget               Goal                 ├─ date
+├─ userId            ├─ userId            └─ paymentMethod
+├─ category          ├─ name
+├─ amount            ├─ targetAmount
+├─ month             ├─ currentAmount
+└─ year              └─ targetDate
+
+
+# Key Business Logic
+
+Balance integrity — creating, editing or deleting a transaction reverses and re-applies its effect on the account balance, so balances never drift.
+Transfers are not expenses — moving money between your own accounts changes how wealth is distributed, not the total.
+Server-side aggregation — dashboard and report totals are computed with MongoDB aggregation pipelines, not in the browser.
+Data isolation — every query is scoped by the authenticated userId.
+Budget status — ok (< 80%), warning (≥ 80%), exceeded (≥ 100%).
 
 ## Setup
 
