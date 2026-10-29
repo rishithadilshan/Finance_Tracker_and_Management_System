@@ -5,7 +5,7 @@ A full-stack personal financial tracker built with MongoDB, Express, React and N
 ## What's included
 
 ## Features
-
+```
 Authentication & Profile
 Register / login with hashed passwords (bcrypt)
 JWT-based protected routes
@@ -38,9 +38,10 @@ Reports & Analytics
 Monthly report (income, expenses, savings, highest expense category)
 Yearly report with income vs. expense bar chart
 Category report
+```
 
 ## Project structure
-
+```
 finance-tracker/
 ├── backend/
 │   ├── config/
@@ -76,10 +77,10 @@ finance-tracker/
         ├── pages/                 # Login, Register, Dashboard, Transactions,
         │                          # Accounts, Budgets, Goals, Reports
         ├── App.jsx
-        └── main.jsx
-
+        └── main.jsx 
+```
 ## System Architecture
-
+```
                  FRONTEND
           React + Vite + Tailwind
                     │
@@ -97,8 +98,10 @@ finance-tracker/
                     │
                     ▼
                  MongoDB
+```
 
 ## Database Models
+```
 User                 Account              Transaction
 ├─ name              ├─ userId            ├─ userId
 ├─ email (unique)    ├─ name              ├─ accountId
@@ -112,6 +115,7 @@ Budget               Goal                 ├─ date
 ├─ amount            ├─ targetAmount
 ├─ month             ├─ currentAmount
 └─ year              └─ targetDate
+```
 
 
 # Key Business Logic
