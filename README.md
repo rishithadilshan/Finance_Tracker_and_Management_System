@@ -123,13 +123,18 @@ Budget               Goal                 ├─ date
 ```
 
 
-# Key Business Logic
+## Key Business Logic
 
-Balance integrity — creating, editing or deleting a transaction reverses and re-applies its effect on the account balance, so balances never drift.
-Transfers are not expenses — moving money between your own accounts changes how wealth is distributed, not the total.
-Server-side aggregation — dashboard and report totals are computed with MongoDB aggregation pipelines, not in the browser.
-Data isolation — every query is scoped by the authenticated userId.
-Budget status — ok (< 80%), warning (≥ 80%), exceeded (≥ 100%).
+### Balance integrity 
+    creating, editing or deleting a transaction reverses and re-applies its effect on the account balance, so balances never drift.
+### Transfers are not expenses 
+    moving money between your own accounts changes how wealth is distributed, not the total.
+### Server-side aggregation 
+    dashboard and report totals are computed with MongoDB aggregation pipelines, not in the browser.
+### Data isolation 
+    every query is scoped by the authenticated userId.
+### Budget status 
+    ok (< 80%), warning (≥ 80%), exceeded (≥ 100%).
 
 ## Setup
 
