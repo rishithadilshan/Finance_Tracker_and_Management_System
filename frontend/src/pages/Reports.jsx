@@ -58,7 +58,7 @@ const Reports = () => {
             </button>
           </div>
           {tab === 'monthly' && (
-            <select className="border rounded-md px-2 py-1.5" value={month} onChange={(e) => setMonth(Number(e.target.value))}>
+            <select className="border rounded-md bg-white border px-2 py-1.5" value={month} onChange={(e) => setMonth(Number(e.target.value))}>
               {MONTH_NAMES.map((m, i) => (
                 <option key={i} value={i + 1}>
                   {m}
@@ -66,7 +66,7 @@ const Reports = () => {
               ))}
             </select>
           )}
-          <input type="number" className="border rounded-md px-2 py-1.5 w-24" value={year} onChange={(e) => setYear(Number(e.target.value))} />
+          <input type="number" className="border rounded-md bg-white border px-2 py-1.5 w-24" value={year} onChange={(e) => setYear(Number(e.target.value))} />
         </div>
       </div>
 

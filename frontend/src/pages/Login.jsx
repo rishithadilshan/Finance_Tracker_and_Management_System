@@ -24,10 +24,10 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-      <div className="w-full max-w-sm bg-white p-8 rounded-xl border shadow-sm">
-        <h1 className="text-xl font-bold text-center text-brand-700 mb-1">💰 FinTrack</h1>
-        <p className="text-center text-sm text-gray-500 mb-6">Log in to your account</p>
+    <div className="min-h-screen flex items-center justify-center px-4">
+      <div className="w-full max-w-sm bg-[#D4E3FB] p-8 rounded-xl border shadow-sm">
+        <img src="/logo-full.png" alt="Finora - Your Money, Your Future" className="w-44 mx-auto mb-2" />
+        <p className="text-center text-sm text-black mb-6 font-medium">Log in to your account</p>
 
         {error && <div className="bg-red-50 text-red-600 text-sm p-2 rounded mb-4">{error}</div>}
 

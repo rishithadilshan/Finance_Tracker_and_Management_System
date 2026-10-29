@@ -69,7 +69,7 @@ useEffect(() => {
 
           <button
             onClick={() => setOpen((o) => !o)}
-            className="px-4 py-2 rounded-md bg-brand-700 hover:bg-brand-700 text-white text-sm max-w-[140px] sm:max-w-none"
+            className="px-4 py-2 rounded-md bg-blue-800 hover:bg-blue-700 text-white text-sm max-w-[140px] sm:max-w-none"
           >
             <span className="block truncate font-bold uppercase">{user?.name?.trim().split(' ')[0]}</span>
           </button>

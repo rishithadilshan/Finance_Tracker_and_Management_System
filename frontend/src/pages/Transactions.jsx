@@ -82,6 +82,7 @@ const Transactions = () => {
       date: new Date(t.date).toISOString().slice(0, 10),
       accountId: t.accountId?._id || t.accountId,
       paymentMethod: t.paymentMethod || '',
+      top: 0, behavior: 'smooth'
     });
   };
 
@@ -97,7 +98,7 @@ const Transactions = () => {
   return (
     <div className="grid md:grid-cols-3 gap-6">
       <div className="md:col-span-1">
-        <div className="bg-white rounded-xl border p-4 shadow-sm sticky top-20">
+        <div className="bg-white rounded-xl border p-4 shadow-sm md:sticky md:top-20 md:max-h-[calc(100vh-6rem)] md:overflow-y-auto">
           <h2 className="font-semibold mb-3">{editingId ? 'Edit Transaction' : 'Add Transaction'}</h2>
           {error && <div className="bg-red-50 text-red-600 text-xs p-2 rounded mb-3">{error}</div>}
           <form onSubmit={handleSubmit} className="space-y-3 text-sm">
@@ -236,7 +237,7 @@ const Transactions = () => {
           </div>
         </div>
 
-        <div className="bg-white rounded-xl border shadow-sm overflow-hidden">
+        <div className="hidden md:block bg-white rounded-xl border shadow-sm overflow-x-auto">
           <table className="w-full text-sm">
             <thead className="bg-gray-50 text-gray-500 text-xs uppercase">
               <tr>
@@ -276,10 +277,44 @@ const Transactions = () => {
               ))}
             </tbody>
           </table>
+          {/* Mobile card list */}
+          <div className="md:hidden space-y-2">
+            {transactions.length === 0 && (
+              <p className="text-center text-gray-400 py-6 text-sm">No transactions found.</p>
+            )}
+            {transactions.map((t) => (
+              <div key={t._id} className="bg-white rounded-xl border shadow-sm p-3">
+                <div className="flex justify-between gap-3">
+                  <div className="min-w-0">
+                    <div className="font-medium text-sm truncate">{t.description || t.category}</div>
+                    <div className="text-xs text-gray-400">
+                      {t.category} · {new Date(t.date).toLocaleDateString()}
+                    </div>
+                  </div>
+                  <div
+                    className={`font-semibold text-sm whitespace-nowrap ${
+                      t.type === 'income' ? 'text-emerald-600' : 'text-red-500'
+                    }`}
+                  >
+                    {t.type === 'income' ? '+' : '-'}
+                    {money(t.amount)}
+                  </div>
+                </div>
+                <div className="flex justify-end gap-4 mt-2 text-xs">
+                  <button onClick={() => handleEdit(t)} className="text-brand-600 font-medium">
+                    Edit
+                  </button>
+                  <button onClick={() => handleDelete(t._id)} className="text-red-500 font-medium">
+                    Delete
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
         {pagination.totalPages > 1 && (
-          <div className="flex justify-center gap-2 text-sm">
+          <div className="flex flex-wrap justify-center gap-2 text-sm">
             {Array.from({ length: pagination.totalPages }, (_, i) => i + 1).map((p) => (
               <button
                 key={p}
