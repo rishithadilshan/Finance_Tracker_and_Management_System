@@ -7,37 +7,42 @@ A full-stack personal financial tracker built with MongoDB, Express, React and N
 ## Features
 ```
 Authentication & Profile
-Register / login with hashed passwords (bcrypt)
-JWT-based protected routes
-Profile update, currency selection, change password
+    Register / login with hashed passwords (bcrypt)
+    JWT-based protected routes
+    Profile update, currency selection, change password
+
 Dashboard
-Total balance across all accounts
-Monthly income, expenses and savings (with savings rate)
-Expenses-by-category pie chart
-Monthly budget progress with warning / exceeded alerts
-Savings goal progress
-Recent transactions
+    Total balance across all accounts
+    Monthly income, expenses and savings (with savings rate)
+    Expenses-by-category pie chart
+    Monthly budget progress with warning / exceeded alerts
+    Savings goal progress
+    Recent transactions
+
 Transactions
-Add, edit, delete income and expense records
-Search by description or category
-Filter by type, category, account and date range
-Server-side pagination and sorting
-Account balances update automatically
-Multiple Accounts & Transfers
-Cash, bank, savings, credit card, digital wallet
-Transfer money between accounts — not counted as income or expense
+    Add, edit, delete income and expense records
+    Search by description or category
+    Filter by type, category, account and date range
+    Server-side pagination and sorting
+    Account balances update automatically
+    Multiple Accounts & Transfers
+    Cash, bank, savings, credit card, digital wallet
+    Transfer money between accounts — not counted as income or expense
+
 Budgets
-Set a monthly budget per category
-Spent / remaining / percentage used calculated server-side
-⚠️ Warning at 80% and 🔴 exceeded state at 100%
+    Set a monthly budget per category
+    Spent / remaining / percentage used calculated server-side
+    ⚠️ Warning at 80% and 🔴 exceeded state at 100%
+
 Savings Goals
-Create goals with a target amount and optional target date
-Contribute over time and track progress
-Automatic "required monthly saving" calculation
+    Create goals with a target amount and optional target date
+    Contribute over time and track progress
+    Automatic "required monthly saving" calculation
+
 Reports & Analytics
-Monthly report (income, expenses, savings, highest expense category)
-Yearly report with income vs. expense bar chart
-Category report
+    Monthly report (income, expenses, savings, highest expense category)
+    Yearly report with income vs. expense bar chart
+    Category report
 ```
 
 ## Project structure
